@@ -1,0 +1,28 @@
+version: 1.0.0
+
+artifacts:
+- path: decode-text-*.zip
+  name: dist
+- path: vc_redist.x64.exe
+  name: vc_redist
+
+build_script: |
+  echo ==================== set env ==================== 
+  set VERSION=1.0.0
+  call "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"
+  set PATH=C:\Qt\5.14.2\msvc2017_64\bin;C:\Qt\Tools\QtCreator\bin\jom;C:\Python39-x64;C:\Python39-x64\Scripts;%PATH%
+  python -m pip install mugideploy
+  echo ==================== build decode-text ==================== 
+  qmake
+  jom release
+  mugideploy collect --app decode-text --version %VERSION% --bin release\decode-text.exe --no-vcredist
+  7z a decode-text-%VERSION%-win64.zip decode-text-%VERSION%-win64
+  curl -L -o vc_redist.x64.exe https://aka.ms/vs/16/release/vc_redist.x64.exe
+
+deploy:
+  description: 'decode-text'
+  provider: GitHub
+  auth_token:
+    secure: VtyAAju8QQyN48h41CVcFeCYS3hZ+c41pC4pEDHwGIuF8w3afYBdpTY9Ir1+KSMP
+  on:
+    branch: master
