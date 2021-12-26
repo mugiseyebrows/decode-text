@@ -35,5 +35,5 @@ jobs:
         shell: cmd
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "release\decode-text.exe"
+          artifacts: "release/decode-text.exe"
           token: ${{ secrets.GITHUB_TOKEN }}
