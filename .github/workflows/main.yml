@@ -20,7 +20,7 @@ jobs:
         run: where qmake
         shell: cmd
       - name: Install mugideploy
-        run: python -m pip install mugideploy
+        run: python -m pip install mugideploy>0.0.7
         shell: cmd
       - name: Build app
         run: |
@@ -30,6 +30,6 @@ jobs:
         shell: cmd
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "release/decode-text.exe"
+          artifacts: "decode-text-0.0.2-win64.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
           tag: 0.0.2
