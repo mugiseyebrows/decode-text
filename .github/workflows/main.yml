@@ -1,8 +1,13 @@
-name: action
-on: [push]
+name: Build and release task
+on:
+  push:
+    branches:
+      - main
 jobs:
   task1:
     runs-on: windows-latest
+    env:
+      APP_VERSION: 0.0.3
     steps:
       - uses: ilammy/msvc-dev-cmd@v1
       - uses: actions/checkout@v2
@@ -26,10 +31,10 @@ jobs:
         run: |
           qmake
           nmake release
-          mugideploy collect --zip --bin release/decode-text.exe --app decode-text --version 0.0.2 --no-vcredist
+          mugideploy collect --zip --bin release/decode-text.exe --app decode-text --version %APP_VERSION% --no-vcredist
         shell: cmd
       - uses: ncipollo/release-action@v1
         with:
-          artifacts: "decode-text-0.0.2-win64.zip"
+          artifacts: "decode-text-*-win64.zip"
           token: ${{ secrets.GITHUB_TOKEN }}
-          tag: 0.0.2
+          tag: ${{ env.APP_VERSION }}
