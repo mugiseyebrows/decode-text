@@ -37,3 +37,4 @@ jobs:
         with:
           artifacts: "release/decode-text.exe"
           token: ${{ secrets.GITHUB_TOKEN }}
+          tag: 0.0.1
