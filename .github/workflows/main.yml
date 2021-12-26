@@ -17,14 +17,14 @@ jobs:
         with:
           cached: ${{ steps.cache-qt.outputs.cache-hit }}
       - name: Test qmake
-        shell: cmd
         run: where qmake
-      - name: Install mugideploy
         shell: cmd
+      - name: Install mugideploy
         run: python -m pip install mugideploy
+        shell: cmd
       - name: Test mugideploy 1
-        shell: python -m mugideploy --help
+        run: python -m mugideploy --help
         shell: cmd
       - name: Test mugideploy 2
-        shell: where mugideploy
+        run: where mugideploy
         shell: cmd
