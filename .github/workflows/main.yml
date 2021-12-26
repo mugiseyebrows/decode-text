@@ -28,3 +28,12 @@ jobs:
       - name: Test mugideploy 2
         run: where mugideploy
         shell: cmd
+      - name: Build app
+        run: |
+          qmake
+          nmake release
+        shell: cmd
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "release\decode-text.exe"
+          token: ${{ secrets.GITHUB_TOKEN }}
